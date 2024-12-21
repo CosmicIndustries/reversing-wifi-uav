@@ -12,16 +12,18 @@ try:
     while True:
         try:
             while len(data) < 20:
-                binary = ser.read()
-                hex = binary.hex()
-                data.append(hex)
+                binary = ser.read(1)  # Read one byte at a time
+                if binary:  # Avoid appending empty data
+                    hex_value = binary.hex()
+                    data.append(hex_value)
+                
         except KeyboardInterrupt:
             ser.close()
             break
 
         print(len(data))
         print(data)
-        data = []
+        data = []  # Reset the data list after each 20 bytes
 
 except KeyboardInterrupt:
     ser.close()

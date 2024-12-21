@@ -1,0 +1,5 @@
+teleop.py: I'll add more control commands, along with a basic autonomous flight command structure.
+
+Files Overview:
+1. teleop.py - Enhanced Command Control
+This will now have extra commands and the ability to automate simple takeoff, landing, and camera tilt movements.

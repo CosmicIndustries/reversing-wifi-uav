@@ -1,0 +1,4 @@
+autonomous_control.py: A new file that integrates sensor data for autonomous control using something like an IMU or GPS.
+
+2. autonomous_control.py - Autonomous Flight with Sensors
+This will provide a framework for autonomous flight using external sensors like IMUs and GPS modules.

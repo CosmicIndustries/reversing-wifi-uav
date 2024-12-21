@@ -46,33 +46,32 @@ class Drone:
         self.MESSAGE_HEADER = bytearray([0xef, 0x02, 0x7c, 0x00, 0x02, 0x02, 0x00, 0x01, 0x02, 0x00, 0x00, 0x00])
         self.COUNTER_1_SUFFIX = bytearray([0x00, 0x00, 0x14, 0x00, 0x66, 0x14])
         self.CONTROL_SUFFIX = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
-        self.CHECKSUM_SUFFIX = bytearray([0x99, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x32, 0x4b, 0x14, 0x2d, 0x00, 0x00 ])
+        self.CHECKSUM_SUFFIX = bytearray([0x99, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x32, 0x4b, 0x14, 0x2d, 0x00, 0x00])
         self.COUNTER_2_SUFFIX = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x14, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff])
         self.COUNTER_3_SUFFIX = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00])
-        pass
 
     def counter(self) -> None:
         if self.COUNTER_1_1 + 1 >= 256:
             self.COUNTER_1_1 = 0
             self.COUNTER_1_2 += 1
-        else :
+        else:
             self.COUNTER_1_1 += 1
-        
+
         if self.COUNTER_2_1 + 1 >= 256:
             self.COUNTER_2_1 = 0
             self.COUNTER_2_2 += 1
-        else :
+        else:
             self.COUNTER_2_1 += 1
 
         if self.COUNTER_3_1 + 1 >= 256:
             self.COUNTER_3_1 = 0
             self.COUNTER_3_2 += 1
-        pass
 
     def build_message(self) -> None:
         counter_1 = bytearray([(self.COUNTER_1_1), (self.COUNTER_1_2)])
         counter_2 = bytearray([(self.COUNTER_2_1), (self.COUNTER_2_2)])
         counter_3 = bytearray([(self.COUNTER_3_1), (self.COUNTER_3_2)])
+
         control = bytearray([(self.ROLL), (self.PITCH), (self.THROTTLE), (self.YAW), (self.COMMAND), (self.HEADLESS)])
         checksum = bytearray([(self.ROLL ^ self.PITCH ^ self.THROTTLE ^ self.YAW ^ self.COMMAND ^ self.HEADLESS)])
 
@@ -82,15 +81,14 @@ class Drone:
 
     def send_message(self) -> None:
         self.TRANSMITTER.sendto(self.MESSAGE, (self.IP, self.PORT))
-        pass
 
     def initialize_image(self) -> None:
         self.RECEIVER.sendto(bytearray([0xef, 0x00, 0x04, 0x00]), ("192.168.169.1", 8800))
-        pass
 
     def image_listener(self) -> None:
         self.RECEIVER.sendto(bytearray([0xef, 0x00, 0x04, 0x00]), ("192.168.169.1", 1234))
         self.RECEIVER.connect(("192.168.169.1", 1234))
+
         while self.RECEIVER_CLOSED is not True:
             data = self.RECEIVER.recv(1080)
             self.IMAGE_BUFFER = data
@@ -107,36 +105,27 @@ class Drone:
         self.set_roll(127)
         self.set_throttle(127)
         self.set_yaw(127)
-        pass
 
     def takeoff(self) -> None:
         self.COMMAND = self.COMMAND_TAKEOFF
-        pass
 
     def stop(self) -> None:
         self.COMMAND = self.COMMAND_STOP
-        pass
 
     def land(self) -> None:
         self.COMMAND = self.COMMAND_LAND
-        pass
 
     def calibrate(self) -> None:
         self.COMMAND = self.COMMAND_CALIBRATE
-        pass
 
     def set_roll(self, value) -> None:
         self.ROLL = value
-        pass
 
     def set_pitch(self, value) -> None:
         self.PITCH = value
-        pass
 
     def set_throttle(self, value) -> None:
         self.THROTTLE = value
-        pass
 
     def set_yaw(self, value) -> None:
         self.YAW = value
-        pass

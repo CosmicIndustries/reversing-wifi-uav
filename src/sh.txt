@@ -1,0 +1,35 @@
+stream_handler.py: A file that listens for video stream packets and decodes them using OpenCV or another library.
+. stream_handler.py - Video Stream Handling
+This will allow you to capture the video stream and display or save it using OpenCV.
+
+Steps to Use the Altered Files
+Run teleop.py:
+
+This file sends control commands like takeoff, landing, and camera tilt.
+Simply run it in a Python environment:
+bash
+Copy code
+python teleop.py
+Run autonomous_control.py:
+
+This script uses sensor data for autonomous flight.
+Ensure that your IMU and GPS sensors are properly configured.
+Run it:
+bash
+Copy code
+python autonomous_control.py
+Run stream_handler.py:
+
+This file will display the video stream from the drone in a window.
+Run it:
+bash
+Copy code
+python stream_handler.py
+Next Steps
+Integrating sensors: Ensure that your IMU and GPS modules are correctly interfaced with the Python code.
+Testing: Test each script separately to ensure proper communication and functionality.
+Enhancements: Add more complex autonomous features like obstacle detection, dynamic waypoint generation, or path planning.
+
+WIFI_8K_c08915
+192.168.1.100
+02-97-EA-FE-F1-55
